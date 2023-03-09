@@ -145,12 +145,28 @@ class BinarySearchTree {
   }
 
   countLeaves(count = 0) {
-    // your solution here
+    // count the leaves in the tree
+    // should return number as output
+    //if the tree only has a single node return 1
+    if (!this.left && !this.right) {
+      return 1;
+    }
+    const newCount = count + 1;
+
+    //no children on left, go down right of the tree
+    if (!this.left) return this.right.countLeaves(newCount);
+  
+    // no children on right, go down right of tree
+    // call countLeaves() bring down the 
+    if (!this.right) return this.left.countLeaves(newCount);
+
+    const left = this.left.countLeaves(newCount);
+    const right = this.right.countLeaves(newCount);
+    count = left + right;
     return count;
   }
 
   isBalancedBST() {
-    // your solution here
     return 0;
   }
 
