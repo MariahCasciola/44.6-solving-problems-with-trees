@@ -155,9 +155,9 @@ class BinarySearchTree {
 
     //no children on left, go down right of the tree
     if (!this.left) return this.right.countLeaves(newCount);
-  
+
     // no children on right, go down right of tree
-    // call countLeaves() bring down the 
+    // call countLeaves() bring down the
     if (!this.right) return this.left.countLeaves(newCount);
 
     const left = this.left.countLeaves(newCount);
@@ -166,8 +166,35 @@ class BinarySearchTree {
     return count;
   }
 
-  isBalancedBST() {
-    return 0;
+  isBalancedBST(height = 0) {
+    //check if BST is height-balanced
+    // height of left sub tree differs from the height of the right subtree by no more than 1
+    //return the height of the BST if it is balanced
+    // else return -1
+    if (!this.left && !this.right) return height;
+
+    const newHeight = height + 1;
+
+    // no right, traverse to the left of the tree
+    if (!this.right) {
+      return this.left.isBalancedBST(newHeight);
+    }
+
+    // no left, traverse to the right of the tree
+    if (!this.left) {
+      return this.right.isBalancedBST(newHeight);
+    }
+
+    const leftHeight = this.left.isBalancedBST(newHeight);
+    const rightHeight = this.right.isBalancedBST(newHeight);
+
+// find difference between leftHeight and rightHeight
+    const difference = Math.abs(leftHeight - rightHeight);
+
+    if (difference <= 1) {
+      return Math.max(leftHeight, rightHeight);
+    }
+    return -1;
   }
 
   _replaceWith(node) {
